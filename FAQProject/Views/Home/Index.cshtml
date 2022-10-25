@@ -1,0 +1,51 @@
+﻿@model FAQListViewModel
+@{ 
+    ViewBag.Title = "FAQs";
+}
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="list-group">
+            @foreach (Category cat in Model.Categories)
+            {
+                <a asp-controller="Home" asp-action="Index" asp-route-activeTopic="@Model.ActiveTopic" 
+                   asp-route-activeCat="@cat.CategoryId" class="list-group-item @Model.CheckActiveCat(cat.CategoryId)">
+                    @cat.CategoryName
+                </a>
+            }
+        </div>
+    </div>
+
+    <div class="col-sm-9">
+        <div class="navbar-brand">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">All FAQs</a>
+                </li>
+                @foreach (Topic topic in Model.Topics)
+                 {
+                    <li class="list-inline-item">
+                        <a asp-controller="Home" asp-action="Index" asp-route-activeTopic="@topic.TopicId"
+                        asp-route-activeCat="@Model.ActiveCat" class="nav-link text-dark @Model.CheckActiveTopic(topic.TopicId)">
+                        @topic.TopicName
+                        </a>
+                    </li>
+                 }
+            </ul>
+        </div>
+        <ul class="list-inline">
+
+            @foreach (FAQ faq in Model.FAQs)
+            {
+                <li class="list-inline-item">
+                    <p><b>@faq.FAQQuestion</b> @faq.FAQAnswer</p>
+                </li>
+                <li>
+                    <p>Topic: @faq.Topic.TopicName </p>
+                    <p>Category: @faq.Category.CategoryName</p>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
